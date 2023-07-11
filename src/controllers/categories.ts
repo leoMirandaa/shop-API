@@ -1,47 +1,60 @@
 import { Request, Response } from "express";
 import { handleHttpError } from "../utils/error.handle";
-import { getCategories, insertCategory } from "../services/categories";
 
-const getItems = async (req: Request, res: Response) => {
+import categoriesService from "../services/categories";
+
+const getCategories = async (req: Request, res: Response) => {
   try {
-    const response = await getCategories();
-    res.send(response);
+    const categories = await categoriesService.getCategories();
+    res.status(200).json(categories);
   } catch (error) {
     handleHttpError(res, "ERROR_GET_CATEGORIES", error);
   }
 };
 
-const getItem = (req: Request, res: Response) => {
+const getCategory = async ({ params }: Request, res: Response) => {
   try {
-    res.json({ msg: "category[GET]" });
+    const { id } = params;
+    const category = await categoriesService.getCategory(id);
+    res.status(200).send(category);
   } catch (error) {
     handleHttpError(res, "ERROR_GET_CATEGORY", error);
   }
 };
 
-const createItem = async ({ body }: Request, res: Response) => {
+const createCategory = async ({ body }: Request, res: Response) => {
   try {
-    const response = await insertCategory(body);
-    res.send(response);
+    const category = await categoriesService.createCategory(body);
+    res.status(200).json(category);
   } catch (error) {
     handleHttpError(res, "ERROR_CREATE_CATEGORY", error);
   }
 };
 
-const updateItem = (req: Request, res: Response) => {
+const updateCategory = async ({ params, body }: Request, res: Response) => {
   try {
-    res.json({ msg: "Category[PUT]" });
+    const { id } = params;
+    const category = await categoriesService.updateCategory(id, body);
+    res.status(200).json(category);
   } catch (error) {
     handleHttpError(res, "ERROR_UPDATE_CATEGORY", error);
   }
 };
 
-const deleteItem = (req: Request, res: Response) => {
+const deleteCategory = async ({ params }: Request, res: Response) => {
   try {
-    res.json({ msg: "category[DELETE]" });
+    const { id } = params;
+    const category = await categoriesService.deleteCategory(id);
+    res.status(200).json(category);
   } catch (error) {
     handleHttpError(res, "ERROR_DELETE_CATEGORY", error);
   }
 };
 
-export { getItems, getItem, createItem, updateItem, deleteItem };
+export {
+  getCategories,
+  getCategory,
+  createCategory,
+  updateCategory,
+  deleteCategory,
+};

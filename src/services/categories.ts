@@ -2,13 +2,40 @@ import { Category } from "../interfaces/category.interface";
 import CategoryModel from "../models/category";
 
 const getCategories = async () => {
-  const categories = await CategoryModel.find({});
+  const query = { status: true };
+
+  const categories = await CategoryModel.find(query).limit(2);
   return categories;
 };
 
-const insertCategory = async (item: Category) => {
-  const responseItem = await CategoryModel.create(item);
-  return responseItem;
+const getCategory = async (id: string) => {
+  const category = await CategoryModel.findById(id);
+  return category;
 };
 
-export { getCategories, insertCategory };
+const createCategory = async (item: Category) => {
+  const category = await CategoryModel.create(item);
+  return category;
+};
+
+const updateCategory = async (id: string, data: Category) => {
+  const category = CategoryModel.findByIdAndUpdate(id, data, { new: true });
+  return category;
+};
+
+const deleteCategory = async (id: string) => {
+  const category = await CategoryModel.findByIdAndUpdate(
+    id,
+    { status: false },
+    { new: true }
+  );
+  return category;
+};
+
+export default {
+  getCategories,
+  getCategory,
+  createCategory,
+  updateCategory,
+  deleteCategory,
+};

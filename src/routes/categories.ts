@@ -1,17 +1,17 @@
 import { Router } from "express";
 import {
-  getItems,
-  createItem,
-  getItem,
-  updateItem,
-  deleteItem,
+  getCategories,
+  createCategory,
+  getCategory,
+  updateCategory,
+  deleteCategory,
 } from "../controllers/categories";
 
 const router = Router();
-router.get("/", getItems);
-router.get("/:id", getItem);
-router.post("/", createItem);
-router.put("/", updateItem);
-router.delete("", deleteItem);
+router.get("/", getCategories);
+router.get("/:id", getCategory);
+router.post("/", createCategory);
+router.put("/:id", updateCategory);
+router.delete("/:id", deleteCategory);
 
 export default router;
