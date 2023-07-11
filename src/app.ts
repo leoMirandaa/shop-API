@@ -1,6 +1,7 @@
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
+import db from "./config/mongo";
 
 import categoryRouter from "./routes/categories";
 
@@ -12,5 +13,5 @@ app.use(express.json());
 
 app.use("/categories", categoryRouter);
 
-// db().then(() => console.log("Conection Ready"));
+db().then(() => console.log("Conection Ready"));
 app.listen(PORT, () => console.log(`Ready by port ${PORT}`));
