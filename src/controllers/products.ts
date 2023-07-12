@@ -31,4 +31,25 @@ const createProduct = async ({ body }: Request, res: Response) => {
   }
 };
 
-export { getProducts, getProduct, createProduct };
+const updateProduct = async ({ body, params }: Request, res: Response) => {
+  console.log("00 ", body, params.id);
+  try {
+    const { id } = params;
+    const product = await productsService.updateProduct(id, body);
+    res.status(200).json(product);
+  } catch (error) {
+    handleHttpError(res, "ERROR_UPDATE_PRODUCT", error);
+  }
+};
+
+const deleteProduct = async ({ params }: Request, res: Response) => {
+  try {
+    const { id } = params;
+    const product = await productsService.deleteProduct(id);
+    res.status(200).json(product);
+  } catch (error) {
+    handleHttpError(res, "ERROR_DELETE_PRODUCT", error);
+  }
+};
+
+export { getProducts, getProduct, createProduct, updateProduct, deleteProduct };

@@ -13,8 +13,8 @@ const getCategory = async (id: string) => {
   return category;
 };
 
-const createCategory = async (item: Category) => {
-  const category = await CategoryModel.create(item);
+const createCategory = async (data: Category) => {
+  const category = await CategoryModel.create(data);
   return category;
 };
 

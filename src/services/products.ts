@@ -13,9 +13,29 @@ const getProduct = async (id: string) => {
   return product;
 };
 
-const createProduct = async (item: Product) => {
-  const product = await ProductModel.create(item);
+const createProduct = async (data: Product) => {
+  const product = await ProductModel.create(data);
   return product;
 };
 
-export default { getProducts, getProduct, createProduct };
+const updateProduct = async (id: string, data: Product) => {
+  const product = await ProductModel.findByIdAndUpdate(id, data, { new: true });
+  return product;
+};
+
+const deleteProduct = async (id: string) => {
+  const product = ProductModel.findByIdAndUpdate(
+    id,
+    { status: false },
+    { new: true }
+  );
+  return product;
+};
+
+export default {
+  getProducts,
+  getProduct,
+  createProduct,
+  updateProduct,
+  deleteProduct,
+};
