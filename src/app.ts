@@ -6,6 +6,7 @@ import db from "./config/mongo";
 import categoryRouter from "./routes/categories";
 import productRouter from "./routes/products";
 import userRouter from "./routes/users";
+import authRouter from "./routes/auth";
 
 const PORT = process.env.PORT || 30001;
 
@@ -16,6 +17,7 @@ app.use(express.json());
 app.use("/categories", categoryRouter);
 app.use("/products", productRouter);
 app.use("/users", userRouter);
+app.use("/auth", authRouter);
 
 db().then(() => console.log("Conection Ready"));
 app.listen(PORT, () => console.log(`Ready by port ${PORT}`));

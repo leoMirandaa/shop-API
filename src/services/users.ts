@@ -1,5 +1,6 @@
 import { User } from "../interfaces/user.interface";
 import UserModel from "../models/user";
+import { encrypt } from "../utils/bcrypt.handle";
 
 const getUsers = async () => {
   const query = { status: true };
@@ -13,13 +14,23 @@ const getUser = async (id: string) => {
   return user;
 };
 
-const createUser = async (data: User) => {
-  //todo: encrypt password before save it
-  const user = await UserModel.create(data);
+const createUser = async ({ name, email, password }: User) => {
+  const userExists = await UserModel.findOne({ email });
+
+  console.log("userExists ", userExists);
+  if (userExists) return "USER_ALREADY_EXISTS";
+
+  const hashedPassword = await encrypt(password);
+  const user = await UserModel.create({
+    name,
+    email,
+    password: hashedPassword,
+  });
   return user;
 };
 
 const updateUser = async (id: string, data: User) => {
+  //todo hash password
   const user = await UserModel.findByIdAndUpdate(id, data, { new: true });
   return user;
 };
