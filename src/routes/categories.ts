@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { checkJWT } from "../middleware/session";
 import {
   getCategories,
   createCategory,
@@ -10,8 +11,8 @@ import {
 const router = Router();
 router.get("/", getCategories);
 router.get("/:id", getCategory);
-router.post("/", createCategory);
-router.put("/:id", updateCategory);
-router.delete("/:id", deleteCategory);
+router.post("/", checkJWT, createCategory);
+router.put("/:id", checkJWT, updateCategory);
+router.delete("/:id", checkJWT, deleteCategory);
 
 export default router;

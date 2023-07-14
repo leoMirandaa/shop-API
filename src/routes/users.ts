@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { checkJWT } from "../middleware/session";
 import {
   createUser,
   deleteUser,
@@ -10,8 +11,8 @@ import {
 const router = Router();
 router.get("/", getUsers);
 router.get("/:id", getUser);
-router.post("/", createUser);
-router.put("/:id", updateUser);
-router.delete("/:id", deleteUser);
+router.post("/", checkJWT, createUser);
+router.put("/:id", checkJWT, updateUser);
+router.delete("/:id", checkJWT, deleteUser);
 
 export default router;
