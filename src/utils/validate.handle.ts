@@ -7,7 +7,7 @@ const validateResult = (req: Request, res: Response, next: NextFunction) => {
     validationResult(req).throw();
     return next();
   } catch (error) {
-    res.status(403).json(error);
+    res.status(400).json(error);
   }
 };
 

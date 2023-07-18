@@ -25,7 +25,7 @@ const getCategory = async ({ params }: Request, res: Response) => {
 const createCategory = async ({ body }: Request, res: Response) => {
   try {
     const category = await categoriesService.createCategory(body);
-    res.status(200).json(category);
+    res.status(201).json(category);
   } catch (error) {
     handleHttpError(res, "ERROR_CREATE_CATEGORY", error);
   }

@@ -24,6 +24,11 @@ const getUser = async ({ params }: Request, res: Response) => {
 
 const createUser = async ({ body }: Request, res: Response) => {
   const user = await usersService.createUser(body);
+
+  if (user === "USER_ALREADY_EXISTS") {
+    return res.status(400).json({ msg: "USER_ALREADY_EXISTS" });
+  }
+
   res.status(200).json(user);
 };
 
