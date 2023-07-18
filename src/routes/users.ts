@@ -1,19 +1,24 @@
 import { Router } from "express";
 import { checkJWT } from "../middleware/session";
 import {
+  validateCreate,
+  validateDelete,
+  validateGet,
+  validateUpdate,
+} from "../validators/users";
+import {
   createUser,
   deleteUser,
   getUser,
   getUsers,
   updateUser,
 } from "../controllers/users";
-import { validateCreate } from "../validators/users";
 
 const router = Router();
 router.get("/", getUsers);
-router.get("/:id", getUser);
+router.get("/:id", validateGet, getUser);
 router.post("/", validateCreate, checkJWT, createUser);
-router.put("/:id", checkJWT, updateUser);
-router.delete("/:id", checkJWT, deleteUser);
+router.put("/:id", validateUpdate, checkJWT, updateUser);
+router.delete("/:id", validateDelete, checkJWT, deleteUser);
 
 export default router;

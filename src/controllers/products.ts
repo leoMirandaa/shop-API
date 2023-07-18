@@ -25,7 +25,7 @@ const getProduct = async ({ params }: Request, res: Response) => {
 const createProduct = async ({ body }: Request, res: Response) => {
   try {
     const product = await productsService.createProduct(body);
-    res.status(200).json(product);
+    res.status(201).json(product);
   } catch (error) {
     handleHttpError(res, "ERROR_CREATE_PRODUCT", error);
   }

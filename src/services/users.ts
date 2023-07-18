@@ -17,7 +17,6 @@ const getUser = async (id: string) => {
 const createUser = async ({ name, email, password }: User) => {
   const userExists = await UserModel.findOne({ email });
 
-  console.log("userExists ", userExists);
   if (userExists) return "USER_ALREADY_EXISTS";
 
   const hashedPassword = await encrypt(password);

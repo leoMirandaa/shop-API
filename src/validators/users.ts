@@ -1,7 +1,15 @@
+// todo : validate role on each necesary method
 import { Request, Response, NextFunction } from "express";
 
 import { check } from "express-validator";
 import { validateResult } from "../utils/validate.handle";
+import { emailExists, userIdExists } from "./db-validators";
+
+const method = (req: Request, res: Response, next: NextFunction) => {
+  validateResult(req, res, next);
+};
+
+const validateGet = [check("id").isMongoId().custom(userIdExists), method];
 
 const validateCreate = [
   check("name")
@@ -15,12 +23,21 @@ const validateCreate = [
       }
       return true;
     }),
-  check("email").exists().isEmail(),
+  check("email").exists().isEmail().custom(emailExists),
   check("password").not().isEmpty(),
-
-  (req: Request, res: Response, next: NextFunction) => {
-    validateResult(req, res, next);
-  },
+  method,
 ];
 
-export { validateCreate };
+const validateUpdate = [
+  check("id").isMongoId(),
+  check("id").custom(userIdExists),
+  method,
+];
+
+const validateDelete = [
+  check("id").isMongoId(),
+  check("id").custom(userIdExists),
+  method,
+];
+
+export { validateGet, validateCreate, validateUpdate, validateDelete };
