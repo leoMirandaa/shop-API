@@ -7,12 +7,18 @@ import {
   updateProduct,
   deleteProduct,
 } from "../controllers/products";
+import {
+  validateCreate,
+  validateDelete,
+  validateGet,
+  validateUpdate,
+} from "../validators/products";
 
 const router = Router();
 router.get("/", getProducts);
-router.get("/:id", getProduct);
-router.post("/", checkJWT, createProduct);
-router.put("/:id", checkJWT, updateProduct);
-router.delete("/:id", checkJWT, deleteProduct);
+router.get("/:id", validateGet, getProduct);
+router.post("/", checkJWT, validateCreate, createProduct);
+router.put("/:id", checkJWT, validateUpdate, updateProduct);
+router.delete("/:id", checkJWT, validateDelete, deleteProduct);
 
 export default router;
