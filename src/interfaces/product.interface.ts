@@ -4,10 +4,11 @@ export interface Product {
   price: number;
   img?: Img;
   status?: boolean;
+
   category: object; //shirts,pants,hoodies,hats
   size: SizeType;
   gender: GenderType;
-  // inStock: number;
+
   // user: object;
 }
 
@@ -15,6 +16,7 @@ interface Img {
   public_id: string;
   url: string;
 }
+
 
 export enum SizeType {
   XS = "Xtra-small",
@@ -32,3 +34,4 @@ export enum GenderType {
   UNISEX = "Unisex",
 }
 // ["Men", "Women", "Kid", "Unisex"]
+

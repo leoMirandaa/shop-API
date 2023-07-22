@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
+import cloudinary from "../utils/cloudinary.handle";
 import { handleHttpError } from "../utils/error.handle";
-
 import productsService from "../services/products";
 
 const getProducts = async (req: Request, res: Response) => {
@@ -22,9 +22,25 @@ const getProduct = async ({ params }: Request, res: Response) => {
   }
 };
 
-const createProduct = async ({ body }: Request, res: Response) => {
+const createProduct = async ({ body, files }: Request, res: Response) => {
+  const { name, description, price, img, category } = body;
+  const { tempFilePath }: any = files?.image;
+
   try {
-    const product = await productsService.createProduct(body);
+    const result = await cloudinary.uploader.upload(tempFilePath, {
+      folder: "products",
+    });
+
+    const product = await productsService.createProduct({
+      name,
+      description,
+      price,
+      img: {
+        public_id: result.public_id,
+        url: result.secure_url,
+      },
+      category,
+    });
     res.status(201).json(product);
   } catch (error) {
     handleHttpError(res, "ERROR_CREATE_PRODUCT", error);
