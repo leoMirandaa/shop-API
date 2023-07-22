@@ -17,7 +17,6 @@ interface Img {
   url: string;
 }
 
-
 export enum SizeType {
   XS = "Xtra-small",
   SM = "Small",
@@ -34,4 +33,3 @@ export enum GenderType {
   UNISEX = "Unisex",
 }
 // ["Men", "Women", "Kid", "Unisex"]
-

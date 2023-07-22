@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import cloudinary from "../utils/cloudinary.handle";
 import { handleHttpError } from "../utils/error.handle";
 import productsService from "../services/products";
+import { Product } from "../interfaces/product.interface";
 
 const getProducts = async (req: Request, res: Response) => {
   try {
@@ -23,7 +24,8 @@ const getProduct = async ({ params }: Request, res: Response) => {
 };
 
 const createProduct = async ({ body, files }: Request, res: Response) => {
-  const { name, description, price, img, category } = body;
+  const { name, description, price, img, category, size, gender }: Product =
+    body;
   const { tempFilePath }: any = files?.image;
 
   try {
@@ -40,6 +42,8 @@ const createProduct = async ({ body, files }: Request, res: Response) => {
         url: result.secure_url,
       },
       category,
+      size,
+      gender,
     });
     res.status(201).json(product);
   } catch (error) {
