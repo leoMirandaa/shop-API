@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import { Product } from "../interfaces/product.interface";
+import { GenderType, Product, SizeType } from "../interfaces/product.interface";
 
 const ProductSchema = new Schema<Product>(
   {
@@ -31,10 +31,22 @@ const ProductSchema = new Schema<Product>(
       default: true,
     },
     category: {
+      // shirts, pants, hoodies, hats
       type: Schema.Types.ObjectId,
       ref: "Category",
       required: true,
     },
+    size: {
+      type: String,
+      enum: SizeType,
+      required: true,
+    },
+    gender: {
+      type: String,
+      enum: GenderType,
+      required: true,
+    },
+
     // user: {
     //   type: Schema.Types.ObjectId,
     //   ref: "User",
