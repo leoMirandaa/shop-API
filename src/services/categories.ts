@@ -4,7 +4,8 @@ import CategoryModel from "../models/category";
 const getCategories = async () => {
   const query = { status: true };
 
-  const categories = await CategoryModel.find(query).limit(2);
+  // const categories = await CategoryModel.find(query).limit(2);
+  const categories = await CategoryModel.find(query);
   return categories;
 };
 

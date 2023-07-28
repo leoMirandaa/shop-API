@@ -4,6 +4,7 @@ import cors from "cors";
 import db from "./config/mongo";
 import fileupload from "express-fileupload";
 
+import searchRouter from "./routes/search";
 import categoryRouter from "./routes/categories";
 import productRouter from "./routes/products";
 import userRouter from "./routes/users";
@@ -16,6 +17,7 @@ app.use(cors());
 app.use(express.json());
 app.use(fileupload({ useTempFiles: true }));
 
+app.use("/search", searchRouter);
 app.use("/categories", categoryRouter);
 app.use("/products", productRouter);
 app.use("/users", userRouter);
