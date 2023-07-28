@@ -5,7 +5,13 @@ import UserModel from "../models/user";
 import CategoryModel from "../models/category";
 import ProductModel from "../models/product";
 
-const admittedCollections = ["users", "categories", "products", "roles"];
+const admittedCollections = [
+  "users",
+  "categories",
+  "products",
+  "roles",
+  "findProductsByCategoryId",
+];
 
 const searchUsers = async (term = "", res: Response) => {
   const isMongoId = Types.ObjectId.isValid(term);
@@ -57,6 +63,24 @@ const searchProducts = async (term = "", res: Response) => {
   res.json({ results: products });
 };
 
+const findProductsByCategoryId = async (term = " ", res: Response) => {
+  const isMongoId = Types.ObjectId.isValid(term);
+
+  if (!isMongoId) {
+    return res.status(400).json({
+      msg: "Not valid Category ID",
+    });
+  }
+
+  const products = await ProductModel.find({
+    category: term,
+  }).populate("category", "name");
+
+  res.json({
+    results: products,
+  });
+};
+
 const search = ({ params }: Request, res: Response) => {
   const { collection, term } = params;
 
@@ -77,6 +101,10 @@ const search = ({ params }: Request, res: Response) => {
 
     case "products":
       searchProducts(term, res);
+      break;
+
+    case "findProductsByCategoryId":
+      findProductsByCategoryId(term, res);
       break;
 
     //todo: find products by category

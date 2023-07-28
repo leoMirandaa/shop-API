@@ -23,10 +23,11 @@ const getProduct = async ({ params }: Request, res: Response) => {
   }
 };
 
-const createProduct = async ({ body, files }: Request, res: Response) => {
-  const { name, description, price, img, category, size, gender }: Product =
-    body;
-  const { tempFilePath }: any = files?.image;
+const createProduct = async (req: Request, res: Response) => {
+  const { name, description, price, category, size, gender }: Product =
+    req.body;
+
+  const { tempFilePath }: any = req.files?.image;
 
   try {
     const result = await cloudinary.uploader.upload(tempFilePath, {
