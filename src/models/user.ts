@@ -16,6 +16,30 @@ const UserSchema = new Schema<User>(
       type: String,
       required: [true, "Password required"],
     },
+    address: {
+      street: {
+        type: String,
+        required: true,
+      },
+      country: {
+        type: String,
+      },
+      city: {
+        type: String,
+        required: true,
+      },
+      state: {
+        type: String,
+        required: true,
+      },
+      zip: {
+        type: String,
+        required: true,
+      },
+    },
+    phone: {
+      type: String,
+    },
     role: {
       type: String,
       enum: ["ADMIN_ROLE", "USER_ROLE"],

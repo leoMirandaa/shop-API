@@ -4,7 +4,7 @@ import ProductModel from "../models/product";
 const getProducts = async () => {
   const query = { status: true };
 
-  const products = await ProductModel.find(query);
+  const products = await ProductModel.find(query).populate("category", "name");
   return products;
 };
 
