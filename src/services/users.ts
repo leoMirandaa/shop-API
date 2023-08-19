@@ -14,7 +14,7 @@ const getUser = async (id: string) => {
   return user;
 };
 
-const createUser = async ({ name, email, password }: User) => {
+const createUser = async ({ name, email, password, phone, address }: User) => {
   const userExists = await UserModel.findOne({ email });
 
   if (userExists) return "USER_ALREADY_EXISTS";
@@ -24,6 +24,8 @@ const createUser = async ({ name, email, password }: User) => {
     name,
     email,
     password: hashedPassword,
+    phone,
+    address,
   });
   return user;
 };
