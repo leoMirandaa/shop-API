@@ -63,6 +63,7 @@ const searchProducts = async (term = "", res: Response) => {
   res.json({ results: products });
 };
 
+// localhost:3002/search/findProductsByCategoryId/......id.....
 const findProductsByCategoryId = async (term = " ", res: Response) => {
   const isMongoId = Types.ObjectId.isValid(term);
 
@@ -74,6 +75,7 @@ const findProductsByCategoryId = async (term = " ", res: Response) => {
 
   const products = await ProductModel.find({
     category: term,
+    status: true,
   }).populate("category", "name");
 
   res.json({
@@ -106,8 +108,6 @@ const search = ({ params }: Request, res: Response) => {
     case "findProductsByCategoryId":
       findProductsByCategoryId(term, res);
       break;
-
-    //todo: find products by category
 
     default:
       res.status(500).json({
