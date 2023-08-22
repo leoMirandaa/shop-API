@@ -3,7 +3,11 @@ import { User } from "../interfaces/user.interface";
 
 const UserSchema = new Schema<User>(
   {
-    name: {
+    firstName: {
+      type: String,
+      required: true,
+    },
+    lastName: {
       type: String,
       required: true,
     },
