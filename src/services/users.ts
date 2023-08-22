@@ -4,24 +4,32 @@ import { encrypt } from "../utils/bcrypt.handle";
 
 const getUsers = async () => {
   const query = { status: true };
-  const users = await UserModel.find(query);
+  const users = await UserModel.find(query).select("-password");
   return users;
 };
 
 const getUser = async (id: string) => {
   //todo //const query = { status: true };
-  const user = await UserModel.findById(id);
+  const user = await UserModel.findById(id).select("-password");
   return user;
 };
 
-const createUser = async ({ name, email, password, phone, address }: User) => {
+const createUser = async ({
+  firstName,
+  lastName,
+  email,
+  password,
+  phone,
+  address,
+}: User) => {
   const userExists = await UserModel.findOne({ email });
 
   if (userExists) return "USER_ALREADY_EXISTS";
 
   const hashedPassword = await encrypt(password);
   const user = await UserModel.create({
-    name,
+    firstName,
+    lastName,
     email,
     password: hashedPassword,
     phone,

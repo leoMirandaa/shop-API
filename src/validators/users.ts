@@ -12,13 +12,24 @@ const method = (req: Request, res: Response, next: NextFunction) => {
 const validateGet = [check("id").isMongoId().custom(userIdExists), method];
 
 const validateCreate = [
-  check("name")
+  check("firstName")
     .exists()
     .not()
     .isEmpty()
-    .isLength({ max: 10 })
+    .isLength({ max: 20 })
     .custom((value, { req }) => {
-      if (value.length < 8) {
+      if (value.length < 2) {
+        throw new Error("min length 8");
+      }
+      return true;
+    }),
+  check("lastName")
+    .exists()
+    .not()
+    .isEmpty()
+    .isLength({ max: 20 })
+    .custom((value, { req }) => {
+      if (value.length < 2) {
         throw new Error("min length 8");
       }
       return true;
