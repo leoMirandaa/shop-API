@@ -24,8 +24,7 @@ const getProduct = async ({ params }: Request, res: Response) => {
 };
 
 const createProduct = async (req: Request, res: Response) => {
-  const { name, description, price, category, size, gender }: Product =
-    req.body;
+  const { name, description, price, category }: Product = req.body;
 
   const { tempFilePath }: any = req.files?.image;
 
@@ -43,8 +42,6 @@ const createProduct = async (req: Request, res: Response) => {
         url: result.secure_url,
       },
       category,
-      size,
-      gender,
     });
     res.status(201).json(product);
   } catch (error) {
