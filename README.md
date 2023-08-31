@@ -10,6 +10,10 @@
 - Mongoose
 - MongoDB
 
+## Swagger docs
+
+<img src="./public/images/swagger-img.jpg"/>
+
 ## Available Scripts
 
 In this project directory, you can run:
