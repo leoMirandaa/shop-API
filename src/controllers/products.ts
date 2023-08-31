@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import cloudinary from "../utils/cloudinary.handle";
 import { handleHttpError } from "../utils/error.handle";
-import productsService from "../services/products";
 import { Product } from "../interfaces/product.interface";
+import productsService from "../services/products";
 
 const getProducts = async (req: Request, res: Response) => {
   try {
@@ -24,9 +24,12 @@ const getProduct = async ({ params }: Request, res: Response) => {
 };
 
 const createProduct = async (req: Request, res: Response) => {
-  const { name, description, price, category }: Product = req.body;
+  const { name, description, price, category, img }: Product = req.body;
 
-  const { tempFilePath }: any = req.files?.image;
+  // console.log("reqBody: ", req.body);
+  console.log("reqHeaders: ", req?.files);
+
+  const { tempFilePath }: any = req.files?.img;
 
   try {
     const result = await cloudinary.uploader.upload(tempFilePath, {
@@ -49,11 +52,33 @@ const createProduct = async (req: Request, res: Response) => {
   }
 };
 
-const updateProduct = async ({ body, params }: Request, res: Response) => {
+const updateProduct = async (
+  { body, params, files }: Request,
+  res: Response
+) => {
+  const { name, description, price, category, img }: Product = body;
+
   console.log("00 ", body, params.id);
+  console.log("reqHeaders: ", files);
+
+  const { tempFilePath }: any = files?.img;
+
   try {
+    const result = await cloudinary.uploader.upload(tempFilePath, {
+      folder: "products",
+    });
     const { id } = params;
-    const product = await productsService.updateProduct(id, body);
+    const product = await productsService.updateProduct(id, {
+      name,
+      description,
+      price,
+      img: {
+        public_id: result.public_id,
+        url: result.secure_url,
+      },
+      category,
+    });
+    // const product = await productsService.updateProduct(id, body);
     res.status(200).json(product);
   } catch (error) {
     handleHttpError(res, "ERROR_UPDATE_PRODUCT", error);
