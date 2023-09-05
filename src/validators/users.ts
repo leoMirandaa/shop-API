@@ -3,7 +3,11 @@ import { Request, Response, NextFunction } from "express";
 
 import { check } from "express-validator";
 import { validateResult } from "../utils/validate.handle";
-import { emailExists, userIdExists } from "./db-validators";
+import {
+  emailExists,
+  emailToChangeExists,
+  userIdExists,
+} from "./db-validators";
 
 const method = (req: Request, res: Response, next: NextFunction) => {
   validateResult(req, res, next);
@@ -42,6 +46,7 @@ const validateCreate = [
 const validateUpdate = [
   check("id").isMongoId(),
   check("id").custom(userIdExists),
+  check("id", "email").custom(emailToChangeExists),
   method,
 ];
 
