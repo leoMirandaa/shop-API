@@ -1,6 +1,6 @@
 import { Express, Request, Response } from "express";
 import swaggerJsdoc from "swagger-jsdoc"; // build swagger doc
-import swaggerUI from "swagger-ui-express"; // exposse documentation in an interface
+import swaggerUI from "swagger-ui-express"; // expose documentation in an interface
 
 const options: swaggerJsdoc.Options = {
   definition: {
@@ -8,7 +8,7 @@ const options: swaggerJsdoc.Options = {
     info: {
       title: "Shop API Docs",
       version: "1.0.0",
-      description: "Simple express library API",
+      description: "API developed with Node and Express",
     },
     components: {
       securitySchemes: {
@@ -27,12 +27,6 @@ const swaggerSpecs = swaggerJsdoc(options);
 function swaggerDocs(app: Express, port: number) {
   // Swagger page
   app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerSpecs));
-
-  // Docs in JSON format
-  // app.get("docs.json", (req: Request, res: Response) => {
-  //   res.setHeader("Content-Type", "application/json");
-  //   res.send(swaggerSpecs);
-  // });
 
   console.log("Swagger running");
 }
