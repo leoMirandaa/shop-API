@@ -14,8 +14,11 @@ const getCategory = async (id: string) => {
   return category;
 };
 
-const createCategory = async (data: Category) => {
-  const category = await CategoryModel.create(data);
+const createCategory = async ({ name }: Category) => {
+  const categoryExists = await CategoryModel.findOne({ name });
+  if (categoryExists) return "CATEGORY_ALREADY_EXISTS";
+
+  const category = await CategoryModel.create({ name });
   return category;
 };
 

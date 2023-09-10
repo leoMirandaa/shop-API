@@ -21,10 +21,11 @@ const createUser = async ({
   password,
   phone,
   address,
+  role,
 }: User) => {
   const userExists = await UserModel.findOne({ email });
 
-  if (userExists) return "USER_ALREADY_EXISTS";
+  if (userExists) return "EMAIL_ALREADY_EXISTS";
 
   const hashedPassword = await encrypt(password);
   const user = await UserModel.create({
@@ -34,6 +35,7 @@ const createUser = async ({
     password: hashedPassword,
     phone,
     address,
+    role,
   });
   return user;
 };

@@ -45,11 +45,17 @@ const UserSchema = new Schema<User>(
       type: String,
     },
     role: {
-      type: String,
-      enum: ["ADMIN_ROLE", "USER_ROLE"],
+      type: Number,
+      enum: [1, 2],
       required: true,
-      default: "USER_ROLE",
+      default: 1,
     },
+    // role: {
+    //   type: String,
+    //   enum: ["ADMIN_ROLE", "USER_ROLE"],
+    //   required: true,
+    //   default: "USER_ROLE",
+    // },
     status: {
       type: Boolean,
       default: true,

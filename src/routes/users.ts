@@ -184,7 +184,7 @@ router.get("/:id", validateGet, getUser);
  *            schema:
  *              $ref: '#/components/schemas/User'
  *      400:
- *        description: Error getting user
+ *        description: Error creating user
  *    security:
  *      - bearerAuth: []
  */

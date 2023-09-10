@@ -16,7 +16,7 @@ const getCategory = async ({ params }: Request, res: Response) => {
   try {
     const { id } = params;
     const category = await categoriesService.getCategory(id);
-    res.status(200).send(category);
+    res.status(200).json(category);
   } catch (error) {
     handleHttpError(res, "ERROR_GET_CATEGORY", error);
   }
@@ -25,6 +25,11 @@ const getCategory = async ({ params }: Request, res: Response) => {
 const createCategory = async ({ body }: Request, res: Response) => {
   try {
     const category = await categoriesService.createCategory(body);
+
+    if (category === "CATEGORY_ALREADY_EXISTS") {
+      return res.status(400).json({ msg: "CATEGORY_ALREADY_EXISTS" });
+    }
+
     res.status(201).json(category);
   } catch (error) {
     handleHttpError(res, "ERROR_CREATE_CATEGORY", error);

@@ -77,7 +77,6 @@ const findProductsByCategoryId = async (term = " ", res: Response) => {
     category: term,
     status: true,
   }).populate("category", "name");
-
   res.json({
     results: products,
   });
