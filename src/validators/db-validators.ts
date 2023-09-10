@@ -1,5 +1,6 @@
 import { User } from "../interfaces/user.interface";
 import CategoryModel from "../models/category";
+import CouponModel from "../models/coupon";
 import ProductModel from "../models/product";
 import UserModel from "../models/user";
 
@@ -60,6 +61,31 @@ const productIdExists = async (id: string) => {
   }
 };
 
+const couponIdExists = async (id: string) => {
+  const coupon = await CouponModel.findById(id);
+  if (!coupon) {
+    throw new Error(`Coupon id: ${id} doesn't exist`);
+  }
+};
+
+const couponExists = async (couponName: string) => {
+  const coupon = await CouponModel.findOne({ name: couponName });
+
+  if (coupon) {
+    throw new Error(`${couponName} already exists`);
+  }
+};
+
+const couponToChangeExists = async (id: string, data: any) => {
+  let receivedCoupon = data.req.body.name;
+
+  const coupon = await CouponModel.findById(id);
+
+  if (receivedCoupon !== coupon?.name) {
+    return couponExists(receivedCoupon);
+  }
+};
+
 export {
   emailExists,
   emailToChangeExists,
@@ -68,4 +94,7 @@ export {
   categoryExists,
   categoryToChangeExists,
   productIdExists,
+  couponIdExists,
+  couponExists,
+  couponToChangeExists,
 };
