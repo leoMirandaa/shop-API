@@ -29,12 +29,19 @@ const ProductSchema = new Schema<Product>(
     category: {
       // enum: boardType,
       type: Schema.Types.ObjectId,
+      ref: "Category",
+
       required: true,
     },
     status: {
       type: Boolean,
       default: true,
     },
+
+    // category: {
+    //   type: Schema.Types.ObjectId,
+    //   ref: "Category"
+    // },
 
     // user: {
     //   type: Schema.Types.ObjectId,

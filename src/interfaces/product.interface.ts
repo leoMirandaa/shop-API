@@ -2,7 +2,7 @@ export interface Product {
   name: string;
   description: string;
   price: number;
-  img?: Img;
+  img?: any;
   category: object; //pennyboard,skateboard,longboar
   status?: boolean;
   // user: object;

@@ -9,7 +9,7 @@ const getProducts = async () => {
 };
 
 const getProduct = async (id: string) => {
-  const product = await ProductModel.findById(id);
+  const product = await ProductModel.findById(id).populate("category", "name");
   return product;
 };
 
