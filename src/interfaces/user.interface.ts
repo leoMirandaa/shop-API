@@ -5,13 +5,19 @@ export interface User {
   password: string;
   address: Address;
   phone: string;
-  role: "ADMIN_ROLE" | "USER_ROLE";
+  // role: "ADMIN_ROLE" | "USER_ROLE";
+  role: UserType;
   status: boolean;
+}
+
+export enum UserType {
+  USER = 1,
+  ADMIN = 2,
 }
 
 export interface Address {
   street: string;
-  country: String;
+  country: string;
   state: string;
   city: string;
   zip: string;

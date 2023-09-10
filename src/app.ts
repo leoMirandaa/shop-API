@@ -10,6 +10,7 @@ import categoryRouter from "./routes/categories";
 import productRouter from "./routes/products";
 import userRouter from "./routes/users";
 import authRouter from "./routes/auth";
+import couponRouter from "./routes/coupons";
 
 const PORT = process.env.PORT || 30001;
 
@@ -42,6 +43,7 @@ app.use("/categories", categoryRouter);
 app.use("/products", productRouter);
 app.use("/users", userRouter);
 app.use("/auth", authRouter);
+app.use("/coupons", couponRouter);
 
 db().then(() => console.log("Conection Ready"));
 app.listen(PORT, async () => {
