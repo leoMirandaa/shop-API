@@ -61,27 +61,45 @@ const updateProduct = async (
   console.log("00 ", body, params.id);
   console.log("reqHeaders: ", files);
 
-  const { tempFilePath }: any = files?.img;
+  if (files?.img) {
+    console.log("Has image: ", files?.img);
+    const { tempFilePath }: any = files?.img;
+    try {
+      const result = await cloudinary.uploader.upload(tempFilePath, {
+        folder: "products",
+      });
+      const { id } = params;
+      const product = await productsService.updateProduct(id, {
+        name,
+        description,
+        price,
+        ...(files?.img && {
+          img: { public_id: result.public_id, url: result.secure_url },
+        }),
+        category,
+      });
+      res.status(200).json(product);
+    } catch (error) {
+      handleHttpError(res, "ERROR_UPDATE_PRODUCT", error);
+    }
+  } else {
+    try {
+      const { id } = params;
+      const product = await productsService.updateProduct(id, {
+        name,
+        description,
+        price,
 
-  try {
-    const result = await cloudinary.uploader.upload(tempFilePath, {
-      folder: "products",
-    });
-    const { id } = params;
-    const product = await productsService.updateProduct(id, {
-      name,
-      description,
-      price,
-      img: {
-        public_id: result.public_id,
-        url: result.secure_url,
-      },
-      category,
-    });
-    // const product = await productsService.updateProduct(id, body);
-    res.status(200).json(product);
-  } catch (error) {
-    handleHttpError(res, "ERROR_UPDATE_PRODUCT", error);
+        // img: {
+        // public_id: result.public_id,
+        // url: result.secure_url,
+        // },
+        category,
+      });
+      res.status(200).json(product);
+    } catch (error) {
+      handleHttpError(res, "ERROR_UPDATE_PRODUCT", error);
+    }
   }
 };
 
